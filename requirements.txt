@@ -1,3 +1,4 @@
+scikit-learn
 pandas
 flask_login
 blinker==1.6.2

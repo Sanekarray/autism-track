@@ -38,7 +38,7 @@ X.loc[:, numeric_columns] = scaler.fit_transform(X[numeric_columns])
 # Entraîner le modèle SVM
 model = SVC(probability=True, random_state=42)
 model.fit(X, y)
-#d
+
 # Sauvegarder le modèle et les transformateurs
 joblib.dump(model, 'C:/Users/cyrin/PycharmProjects/autismproject/templates/autism_svm_model.pkl')
 joblib.dump(label_encoders, 'C:/Users/cyrin/PycharmProjects/autismproject/templates/label_encoders.pkl')
