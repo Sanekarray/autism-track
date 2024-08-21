@@ -1,24 +1,17 @@
-FROM ubuntu:latest
-LABEL authors="cyrin"
-# Use an official Python runtime as a parent image
+# Utilise une image légère de Python 3.11 comme base
 FROM python:3.11-slim
 
-# Set the working directory in the container
+# Définit le répertoire de travail à l'intérieur du conteneur
 WORKDIR /app
 
-# Copy the current directory contents into the container at /app
-COPY . /app
+# Copie tous les fichiers du répertoire courant sur la machine hôte vers le répertoire de travail dans le conteneur
+COPY . .
 
-# Install any needed packages specified in requirements.txt
+# Installe les dépendances listées dans le fichier requirements.txt sans utiliser le cache pour minimiser la taille de l'image
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Make port 5001 available to the world outside this container
+# Indique que le conteneur écoutera sur le port 5001
 EXPOSE 5001
 
-# Define environment variable
-ENV NAME AutismTrackApp
-
-# Run app.py when the container launches
+# Définit la commande par défaut à exécuter lorsque le conteneur démarre : lance l'application Flask
 CMD ["python", "app.py"]
-
-ENTRYPOINT ["top", "-b"]
