@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h2 class="mt-5">Admin Dashboard</h2>
+        <table class="table table-bordered mt-3">
+            <thead>
+                <tr>
+                    <th>Email</th>
+                    <th>Professional Title</th>
+                    <th>Facility Name</th>
+                    <th>Professional ID Document</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for email, info in users.items() %}
+                    <tr>
+                        <td>{{ email }}</td>
+                        <td>{{ info.professional_title }}</td>
+                        <td>{{ info.facility_name }}</td>
+                        <td>
+                            <a href="{{ url_for('static', filename=info.id_document_path.split('/')[-1]) }}" target="_blank">View Document</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

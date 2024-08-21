@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - Autism Track</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <style>
+        body {
+            background-color: #f4f4f4; /* Light grey background for a neutral look */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            max-width: 400px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for a professional look */
+        }
+
+        h2 {
+            color: #01575C; /* Green text for headings */
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .btn-primary {
+            background-color: #01575C;
+            border-color: #01575C;
+            width: 100%;
+        }
+
+        .btn-primary:hover {
+            background-color: #013d41;
+            border-color: #013d41;
+        }
+
+        .form-control {
+            border: 1px solid #ccc; /* Neutral border for inputs */
+            padding: 10px;
+            border-radius: 4px;
+        }
+
+        .form-control:focus {
+            border-color: #01575C; /* Green border on focus */
+            box-shadow: 0 0 5px rgba(1, 87, 92, 0.2); /* Subtle green shadow on focus */
+        }
+
+        .text-center a {
+            color: #01575C; /* Green color for links */
+        }
+
+        .text-center a:hover {
+            color: #013d41;
+            text-decoration: underline;
+        }
+
+        .alert {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        #email-exists-msg {
+            color: red;
+            font-size: 14px;
+            display: none; /* Initially hidden */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="text-center">
+            <img src="{{ url_for('static', filename='images/img-2.png') }}" alt="Autism Track Logo" style="width: 150px; height: auto;">
+        </div>
+        <h2>Sign Up</h2>
+        <form method="POST" action="{{ url_for('signup') }}" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email" required>
+                <small id="email-exists-msg">This email is already registered.</small>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password" required>
+            </div>
+            <div class="form-group">
+                <label for="confirm_password">Confirm Password</label>
+                <input type="password" class="form-control" id="confirm_password" name="confirm_password" placeholder="Confirm your password" required>
+            </div>
+            <div class="form-group">
+                <label for="professional_title">Professional Title</label>
+                <select class="form-control" id="professional_title" name="professional_title" required>
+                    <option value="">Select your profession</option>
+                    <option value="Doctor">Doctor</option>
+                    <option value="Nurse">Nurse</option>
+                    <option value="Therapist">Therapist</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="facility_name">Healthcare Facility Name</label>
+                <select class="form-control" id="facility_name" name="facility_name" required>
+                    <option value="">Select your healthcare facility</option>
+                    <option value="Tunis Military Hospital">Tunis Military Hospital</option>
+                    <option value="Charles Nicolle Hospital">Charles Nicolle Hospital</option>
+                    <option value="Habib Bourguiba University Hospital">Habib Bourguiba University Hospital</option>
+                    <option value="Rabta Hospital">Rabta Hospital</option>
+                    <option value="Sahloul University Hospital">Sahloul University Hospital</option>
+                    <option value="New Facility">Add New Facility</option>
+                </select>
+            </div>
+            <div class="form-group" id="new_facility_group" style="display: none;">
+                <label for="new_facility">Enter New Facility Name</label>
+                <input type="text" class="form-control" id="new_facility" name="new_facility" placeholder="Enter new healthcare facility name">
+            </div>
+            <div class="form-group">
+                <label for="id_document">Upload Professional ID Document</label>
+                <input type="file" class="form-control" id="id_document" name="id_document" required>
+            </div>
+            <button type="submit" class="btn btn-primary" id="signup-btn">Sign Up</button>
+            <div class="text-center mt-3">
+                <a href="{{ url_for('login') }}">Already have an account? Sign in here</a>
+            </div>
+        </form>
+    </div>
+    <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
+    <script>
+        // Check email existence while typing
+        document.getElementById('email').addEventListener('input', function () {
+            var email = this.value;
+
+            if (email.length > 0) {
+                $.ajax({
+                    url: '{{ url_for("check_email") }}',
+                    method: 'POST',
+                    data: { email: email },
+                    success: function(response) {
+                        if (response.exists) {
+                            $('#email-exists-msg').show();
+                            $('#signup-btn').attr('disabled', true);
+                        } else {
+                            $('#email-exists-msg').hide();
+                            $('#signup-btn').attr('disabled', false);
+                        }
+                    }
+                });
+            } else {
+                $('#email-exists-msg').hide();
+                $('#signup-btn').attr('disabled', false);
+            }
+        });
+
+        document.getElementById('facility_name').addEventListener('change', function () {
+            var newFacilityGroup = document.getElementById('new_facility_group');
+            if (this.value === 'New Facility') {
+                newFacilityGroup.style.display = 'block';
+            } else {
+                newFacilityGroup.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Autism Track</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            color: #01575C;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            margin-top: 80px;
+            max-width: 500px;
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        h2 {
+            color: #01575C;
+            margin-bottom: 20px;
+        }
+        .btn-primary {
+            background-color: #01575C;
+            border-color: #01575C;
+            width: 100%;
+            font-size: 18px;
+            padding: 10px;
+            border-radius: 50px;
+            margin-top: 20px;
+        }
+        .btn-primary:hover {
+            background-color: #014A4C;
+            border-color: #014A4C;
+        }
+        .form-control {
+            border: 1px solid #01575C;
+            border-radius: 20px;
+            padding: 15px;
+        }
+        .form-check-label {
+            color: #01575C;
+        }
+        .logo img {
+            max-width: 100px;
+            margin-bottom: 20px;
+        }
+        a {
+            color: #ffb3a0;
+            font-weight: bold;
+        }
+        a:hover {
+            color: #ff8a7a;
+        }
+        .register-link {
+            margin-top: 20px;
+            font-size: 16px;
+        }
+        .register-link a {
+            font-size: 18px;
+            text-decoration: underline;
+        }
+        .alert {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <img src="{{ url_for('static', filename='images/img-2.png') }}" alt="Autism Track Logo">
+        </div>
+        <h2>Login to Autism Track</h2>
+
+        <!-- Flash message section -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="alert alert-{{ messages[0][0] }} mt-3" role="alert">
+                    {{ messages[0][1] }}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <form method="POST" action="{{ url_for('login') }}">
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password" required>
+            </div>
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="remember" name="remember">
+                <label class="form-check-label" for="remember">Remember Me</label>
+            </div>
+            <button type="submit" class="btn btn-primary">Login</button>
+            <div class="text-center mt-3">
+                <a href="{{ url_for('forgot_password') }}">Forgot your password?</a>
+            </div>
+            <div class="register-link text-center">
+                <p>Don't have an account?</p>
+                <a href="{{ url_for('signup') }}">Create one now</a>
+            </div>
+        </form>
+    </div>
+
+    <!-- Bootstrap JS, Popper.js, and jQuery -->
+    <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/popper.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+</body>
+</html>
