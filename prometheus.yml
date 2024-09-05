@@ -2,6 +2,7 @@ global:
   scrape_interval: 15s
 
 scrape_configs:
-  - job_name: 'autismproject'
+  - job_name: 'jenkins'
     static_configs:
-      - targets: ['autismproject:5001']
+      - targets: ['localhost:8088']  # Adjust this if Jenkins runs on a different port or host
+
