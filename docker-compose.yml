@@ -20,7 +20,17 @@ services:
     ports:
       - "3000:3000"
     volumes:
-      - grafana-storage:/var/lib/grafana
+      - grafana-storage:/var/lib/grafana"
+
+  jenkins:
+    image: jenkins/jenkins:lts
+    container_name: jenkins
+    ports:
+      - "8081:8081"
+      - "50000:50000"
+    volumes:
+      - jenkins-data:/var/jenkins_home
 
 volumes:
   grafana-storage:
+  jenkins-data:
