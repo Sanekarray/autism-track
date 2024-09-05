@@ -4,5 +4,6 @@ global:
 scrape_configs:
   - job_name: 'jenkins'
     static_configs:
-      - targets: ['localhost:8088']  # Adjust this if Jenkins runs on a different port or host
-
+      - targets: ['localhost:8080']  # Met à jour l'adresse si nécessaire
+        labels:
+          job: 'jenkins'
