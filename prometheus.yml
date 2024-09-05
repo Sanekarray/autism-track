@@ -4,6 +4,6 @@ global:
 scrape_configs:
   - job_name: 'jenkins'
     static_configs:
-      - targets: ['localhost:8080']  # Met à jour l'adresse si nécessaire
+      - targets: ['localhost:8088']  # Met à jour l'adresse si nécessaire
         labels:
           job: 'jenkins'
